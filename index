@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Página para dedicar</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.12), transparent 90%),
+        radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.35), transparent 70%),
+        linear-gradient(135deg, #180006, #4a0010, #7a001b, #b11226);
+      color: #2d2d2d;
+      overflow-x: hidden;
+    }
+
+    .pagina {
+      max-width: 1100px;
+      margin: auto;
+      padding: 50px 22px 90px;
+    }
+
+    .hero {
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      background: rgba(160, 0, 25, 0.12);
+      border-radius: 50%;
+      top: 40px;
+      left: 5%;
+      filter: blur(4px);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      background: rgba(255, 255, 255, 0.55);
+      border-radius: 50%;
+      bottom: 50px;
+      right: 8%;
+      filter: blur(3px);
+    }
+
+    .titulo-card {
+      position: relative;
+      z-index: 2;
+      width: min(720px, 95%);
+      padding: 55px 35px;
+      border-radius: 35px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.12);
+      border: 1px solid rgba(255,255,255,0.8);
+    }
+
+    .titulo-card h1 {
+      font-size: clamp(42px, 7vw, 78px);
+      color: #a00018;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+
+    .titulo-card p {
+      font-size: 20px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .boton-bajar {
+      margin-top: 30px;
+      padding: 14px 32px;
+      border: none;
+      border-radius: 999px;
+      background: #a00018;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(160, 0, 24, 0.3);
+      transition: 0.3s;
+    }
+
+    .boton-bajar:hover {
+      transform: translateY(-4px);
+      background: #c00022;
+    }
+
+    /* SLIDER LATERAL */
+    .slider {
+      position: fixed;
+      right: -370px;
+      top: 35%;
+      width: 420px;
+      min-height: 210px;
+      padding: 38px 34px 38px 82px;
+      background: linear-gradient(135deg, #2b0008, #5a0013, #8b001f);
+      color: white;
+      border-radius: 120px 0 0 120px;
+      box-shadow: 0 22px 45px rgba(0,0,0,0.22);
+      transition: right 0.55s ease;
+      z-index: 50;
+    }
+
+    .slider.visible,
+    .slider:hover {
+      right: 0;
+    }
+
+    .slider .pestana {
+      position: absolute;
+      left: 22px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .slider h2 {
+      margin-bottom: 12px;
+      font-size: 28px;
+    }
+
+    .slider p {
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* BLOQUE DE TEXTO GRANDE */
+    .dedicatoria {
+      
+  display: flex;
+  align-items: center;
+  justify-content: center;
+      width: min(960px, 100%);
+      margin: 40px auto 95px;
+      padding: 70px 60px;
+      min-height: 420px;
+      border-radius: 38px;
+      background:
+        linear-gradient(rgba(255,255,255,0.82), rgba(255,255,255,0.82)),
+        url("https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1400&q=80");
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.9);
+    }
+
+    .dedicatoria p {
+      max-width: 760px;
+      font-size: clamp(20px, 3vw, 30px);
+      line-height: 1.8;
+      color: #3d3d3d;
+      font-weight: 500;
+    }
+
+    .dedicatoria strong {
+      color: #a00018;
+    }
+@keyframes brilloSube {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translate(
+        calc(-50% + var(--dx)),
+        calc(-50% + var(--dy))
+      )
+      scale(1.5)
+      rotate(180deg);
+  }
+}
+
+@media (max-width: 1000px) {
+  .galeria {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .galeria {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .foto {
+    height: 300px;
+  }
+}
+
+@media (max-width: 430px) {
+  .galeria {
+    grid-template-columns: 1fr;
+  }
+
+  .foto {
+    height: 380px;
+  }
+}
+    /* IMAGEN GRANDE TRANSPARENTE */
+.imagen-ancha {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  height: 330px;
+  position: relative;
+  background:
+    linear-gradient(rgba(238, 220, 120, 0.35), rgba(238, 220, 120, 0.35)),
+    url("https://files.vrchat.cloud/file_5a64092c-9276-4d31-9dde-be7c9e04523b_blob?Expires=1782950400&Key-Pair-Id=K3JAQ0Y971TV2Z&Signature=dN~vWc9os13Ze85hguHYK0ZPnAzvjmZQp7i~bwnyXrT1eJUTY2SXm4lz-32k9d0ETlXCosiDQw-ie0Ge~lgvxszwA7uT-gCXl58Z4Xj-OV8w~3vjr9ecA5K0r38dCic-D03trtrYkOYNanJ4Oe0G5xP-ufeDGVtG9QM4oUoHyIx2r0dtBxll0e8tIH2i2b0TXlaHixj4q58D4XwGD3NmzzcodPsn1iJH57QBFHsL8EjudKKo9Nn~T2bB0c1VxCwGulukV3kh2Q8YkZTeTJyYIDPZmZnPutd87oaYjdz~35BJIdq6NkXgtZ1A3V2MZGEhdFpQjU11wERMwP3j2j32UQ__");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  margin-bottom: 95px;
+  box-shadow:
+    inset 0 40px 80px rgba(255,255,255,0.25),
+    inset 0 -40px 80px rgba(0,0,0,0.12);
+}
+
+    .imagen-ancha::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(1px);
+    }
+
+    /* BLOQUE SEGUNDO */
+    .recuerdo {
+      width: min(900px, 95%);
+      margin: 0 auto 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .recuerdo-img {
+      height: 320px;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 25px 55px rgba(0,0,0,0.16);
+    }
+
+    .recuerdo-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .recuerdo-texto {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 42px;
+      box-shadow: 0 25px 55px rgba(0,0,0,0.1);
+    }
+
+    .recuerdo-texto h2 {
+      color: #a00018;
+      font-size: 34px;
+      margin-bottom: 18px;
+    }
+
+    .recuerdo-texto p {
+      font-size: 18px;
+      line-height: 1.8;
+      color: #555;
+    }
+
+    /* GALERÍA */
+    .galeria-titulo {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .galeria-titulo h2 {
+      font-size: clamp(34px, 5vw, 52px);
+      color: #a00018;
+      margin-bottom: 12px;
+    }
+
+    .galeria-titulo p {
+      color: #666;
+      font-size: 18px;
+    }
+.botones-web {
+  width: 100%;
+  min-height: 330px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 70px;
+}
+
+.boton-redondo {
+  width: 135px;
+  height: 135px;
+  border-radius: 50%;
+  display: inline-block;
+  transition: 0.35s ease;
+  cursor: pointer;
+}
+
+.boton-negro {
+  background: linear-gradient(145deg, #000000, #252525, #555555);
+  box-shadow:
+    0 22px 45px rgba(0, 0, 0, 0.5),
+    inset 0 0 16px rgba(255, 255, 255, 0.12);
+}
+
+.boton-blanco {
+  background: linear-gradient(145deg, #ffffff, #e8e8e8, #bfbfbf);
+  box-shadow:
+    0 22px 45px rgba(0, 0, 0, 0.28),
+    inset 0 0 16px rgba(255, 255, 255, 0.9);
+}
+
+.boton-redondo:hover {
+  transform: translateY(-10px) scale(1.08);
+}
+.galeria {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: 0;
+
+  display: grid;
+  grid-template-columns: repeat(5, 270px);
+  justify-content: center;
+  align-items: center;
+  gap: 42px;
+
+  padding: 0 40px 100px;
+}
+
+.foto {
+  width: 270px;
+  height: 400px;
+  border-radius: 28px;
+  padding: 14px 14px 58px;
+  position: relative;
+  overflow: visible;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  background: linear-gradient(145deg, #050505, #2a2a2a, #6b6b6b);
+  box-shadow:
+    0 28px 55px rgba(0, 0, 0, 0.45),
+    inset 0 0 18px rgba(255, 255, 255, 0.08);
+
+  transform: none !important;
+  margin: 0 !important;
+  transition: 0.35s ease;
+  cursor: pointer;
+  isolation: isolate;
+}
+
+.foto:hover {
+  transform: translateY(-18px) scale(1.07) rotate(2deg) !important;
+  box-shadow:
+    0 42px 85px rgba(0, 0, 0, 0.6),
+    0 0 35px rgba(255, 255, 255, 0.18),
+    0 0 55px rgba(255, 0, 70, 0.35),
+    inset 0 0 20px rgba(255, 255, 255, 0.12);
+  z-index: 50;
+}
+.foto:nth-child(odd):hover {
+  transform: translateY(-18px) scale(1.07) rotate(-2deg) !important;
+}
+
+.foto:nth-child(even):hover {
+  transform: translateY(-18px) scale(1.07) rotate(2deg) !important;
+}
+.foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 20px;
+}
+
+@media (max-width: 1300px) {
+  .galeria {
+    grid-template-columns: repeat(4, 230px);
+  }
+}
+
+@media (max-width: 1050px) {
+  .galeria {
+    grid-template-columns: repeat(3, 230px);
+  }
+}
+
+@media (max-width: 780px) {
+  .galeria {
+    grid-template-columns: repeat(2, 230px);
+  }
+}
+
+@media (max-width: 520px) {
+  .galeria {
+    grid-template-columns: 1fr;
+  }
+
+  .foto {
+    width: 85vw;
+    height: 390px;
+    margin: auto !important;
+  }
+}
+
+.particula-brillo {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  font-size: var(--size);
+  color: var(--color);
+  pointer-events: none;
+  z-index: 100;
+  text-shadow:
+    0 0 8px currentColor,
+    0 0 18px currentColor,
+    0 0 28px currentColor;
+  animation: brilloSube 900ms ease-out forwards;
+}
+
+    .corazon {
+      position: fixed;
+      top: -20px;
+      color: #a00018;
+      font-size: 18px;
+      animation: caer linear forwards;
+      opacity: 0.75;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    @keyframes caer {
+      to {
+        transform: translateY(105vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .recuerdo {
+        grid-template-columns: 1fr;
+      }
+
+      .galeria {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .slider {
+        width: 350px;
+        right: -305px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .pagina {
+        padding-inline: 15px;
+      }
+
+      .dedicatoria {
+        padding: 45px 28px;
+      }
+
+      .imagen-ancha {
+        height: 250px;
+        background-attachment: scroll;
+      }
+
+      .galeria {
+        grid-template-columns: 1fr;
+      }
+
+      .foto {
+        height: 330px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <aside class="slider" id="slider">
+    <div ></div>
+    <h2>𝒮𝒶𝒷𝑒𝓈 𝓆𝓊𝑒 𝓉𝑒 𝒶𝓂𝑜 . . .</h2>
+    <p>
+      ¿Mi tierra?Mi tierra eres tú.¿Mi gente?Mi gente eres tú.El destierro y la muertepara mí están dondeno estés tú.¿Y mi vida?Dime, mi vida,¿qué es, si no eres tú?
+    </p>
+  </aside>
+
+  <main class="pagina">
+
+    <section class="hero">
+      <div class="titulo-card">
+        <h1>𝒩𝑜𝓈𝑜𝓉𝓇𝑜𝓈</h1>
+        <p>
+          Eres mi sol en los días nublados, mi calma en las tormentas y mi razón para sonreír cada mañana.
+        </p>
+        <button class="boton-bajar" onclick="document.getElementById('dedicatoria').scrollIntoView()">
+          Ver dedicatoria
+        </button>
+      </div>
+    </section>
+
+    <section class="dedicatoria" id="dedicatoria">
+      <div class="botones-web">
+        <a href="https://vrchat.com/home/user/usr_fba85e6f-5621-4f17-8c95-c378dee67190" class="boton-redondo boton-negro" aria-label="Ir a Google"></a>
+        <a href="https://vrchat.com/home/user/usr_67512197-f4c8-4a75-9471-eaf3e0958e54" class="boton-redondo boton-blanco" aria-label="Ir a Google"></a>
+      </div>
+    </section>
+
+    <section class="imagen-ancha"></section>
+
+    <section class="recuerdo">
+      <div class="recuerdo-img">
+        <img src="https://api.vrchat.cloud/api/1/file/file_7df1ad52-ddd5-4305-bbb8-e4d9a21a7d77/1/" alt="Imagen de recuerdo">
+      </div>
+
+      <div class="recuerdo-texto">
+        <h2>𝟭𝟵 / 𝟭𝟮 / 𝟮𝟬𝟮𝟲</h2>
+        <p>
+          El 19 de diciembre
+          mi vida cambió sin avisar,
+          porque ese día te conocí
+          y empecé a quererte de verdad.
+
+          Desde entonces guardo ese momento
+          como un tesoro en mi corazón,
+          el día en que comenzó
+          nuestra más bonita ilusión.
+        </p>
+      </div>
+    </section>
+
+    <section class="galeria-titulo">
+      <h2>ℒ𝑜 𝓆𝓊𝑒 𝓂á𝓈 𝒹𝑒𝓈𝑒𝑜 𝑒𝓈 𝒶𝒷𝓇𝒾𝓇 𝓁𝑜𝓈 𝑜𝒿𝑜𝓈 𝒸𝒶𝒹𝒶 𝓂𝒶ñ𝒶𝓃𝒶 𝓎 𝑒𝓃𝒸𝑜𝓃𝓉𝓇𝒶𝓇𝓉𝑒 𝒶 𝓂𝒾 𝓁𝒶𝒹𝑜, 𝒸𝑜𝓂𝑜 𝓈𝒾 𝓁𝒶 𝓋𝒾𝒹𝒶 𝓂𝑒 𝓇𝑒𝒸𝑜𝓇𝒹𝒶𝓇𝒶 𝓆𝓊𝑒 𝓈𝓊 𝓇𝑒𝑔𝒶𝓁𝑜 𝓂á𝓈 𝒽𝑒𝓇𝓂𝑜𝓈𝑜 𝑒𝓇𝑒𝓈 𝓉ú.</h2>
+      <p></p>
+    </section>
+
+    <section class="galeria">
+      <div class="foto">
+        <img src="IMG\1º.png" alt="Foto especial 1">
+      </div>
+
+      <div class="foto">
+        <img src="IMG\2º.png" alt="Foto especial 2">
+      </div>
+
+      <div class="foto">
+        <img src="IMG\3º.png" alt="Foto especial 3">
+      </div>
+
+      <div class="foto">
+        <img src="IMG\4º.png" alt="Foto especial 4">
+      </div>
+
+      <div class="foto">
+        <img src="IMG\5º.png" alt="Foto especial 5">
+      </div>
+
+      <div class="foto">
+        <img src="IMG\6º.png" alt="Foto especial 6">
+      </div>
+
+      <div class="foto">
+        <img src="IMG\7º.png" alt="Foto especial 7">
+      </div>
+
+      <div class="foto">
+        <img src="IMG\8º.png" alt="Foto especial 8">
+      </div>
+
+      <div class="foto">
+        <img src="IMG\9º.png" alt="Foto especial 9">
+      </div>
+
+      <div class="foto">
+        <img src="IMG\10º.png" alt="Foto especial 10">
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const slider = document.getElementById("slider");
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 180) {
+        slider.classList.add("visible");
+      } else {
+        slider.classList.remove("visible");
+      }
+    });
+
+    function crearCorazon() {
+      const corazon = document.createElement("div");
+      corazon.classList.add("corazon");
+      corazon.innerHTML = "❤";
+
+      corazon.style.left = Math.random() * 100 + "vw";
+      corazon.style.animationDuration = Math.random() * 3 + 4 + "s";
+      corazon.style.fontSize = Math.random() * 12 + 14 + "px";
+
+      document.body.appendChild(corazon);
+
+      setTimeout(() => {
+        corazon.remove();
+      }, 7000);
+    }
+
+    setInterval(crearCorazon, 900);
+    const fotosGaleria = document.querySelectorAll(".foto");
+
+fotosGaleria.forEach((foto) => {
+  let ultimoBrillo = 0;
+
+  foto.addEventListener("mousemove", (e) => {
+    const ahora = Date.now();
+
+    if (ahora - ultimoBrillo < 55) return;
+
+    ultimoBrillo = ahora;
+    crearParticulaBrillo(e, foto);
+  });
+
+  foto.addEventListener("mouseenter", (e) => {
+    for (let i = 0; i < 10; i++) {
+      setTimeout(() => {
+        crearParticulaBrillo(e, foto, true);
+      }, i * 45);
+    }
+  });
+});
+
+function crearParticulaBrillo(e, contenedor, aleatorio = false) {
+  const rect = contenedor.getBoundingClientRect();
+  const particula = document.createElement("span");
+
+  const simbolos = ["❤", "♡", "✦", "●", "✧"];
+  const colores = ["#ffffff", "#ffccd8", "#ff4d6d", "#ffd1dc", "#ffe6f0"];
+
+  particula.classList.add("particula-brillo");
+  particula.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+
+  const x = aleatorio ? Math.random() * rect.width : e.clientX - rect.left;
+  const y = aleatorio ? Math.random() * rect.height : e.clientY - rect.top;
+
+  particula.style.setProperty("--x", `${x}px`);
+  particula.style.setProperty("--y", `${y}px`);
+  particula.style.setProperty("--dx", `${Math.random() * 90 - 45}px`);
+  particula.style.setProperty("--dy", `${Math.random() * -100 - 25}px`);
+  particula.style.setProperty("--size", `${Math.random() * 13 + 12}px`);
+  particula.style.setProperty("--color", colores[Math.floor(Math.random() * colores.length)]);
+
+  contenedor.appendChild(particula);
+
+  setTimeout(() => {
+    particula.remove();
+  }, 900);
+}
+  </script>
+
+</body>
+</html>
