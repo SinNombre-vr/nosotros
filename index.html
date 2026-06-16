@@ -16,16 +16,106 @@
     html {
       scroll-behavior: smooth;
     }
+body {
+  min-height: 100vh;
+  color: #ffffff;
+  overflow-x: hidden;
+  position: relative;
 
-    body {
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at top left, rgba(255, 255, 255, 0.12), transparent 90%),
-        radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.35), transparent 70%),
-        linear-gradient(135deg, #180006, #4a0010, #7a001b, #b11226);
-      color: #2d2d2d;
-      overflow-x: hidden;
-    }
+  background:
+    radial-gradient(circle at 50% 20%, rgba(120, 0, 25, 0.55), transparent 28%),
+    radial-gradient(circle at 80% 70%, rgba(180, 20, 60, 0.35), transparent 32%),
+    radial-gradient(circle at 10% 80%, rgba(0, 0, 0, 0.45), transparent 35%),
+    linear-gradient(135deg, #120005, #2b0710, #560014, #8a001f);
+
+  background-size: 160% 160%;
+  animation: fondoVivo 14s ease-in-out infinite alternate;
+}
+
+/* Luz grande moviéndose detrás */
+body::before {
+  content: "";
+  position: fixed;
+  width: 650px;
+  height: 650px;
+  left: -180px;
+  top: -150px;
+  z-index: -2;
+  pointer-events: none;
+
+  background:
+    radial-gradient(circle, rgba(255, 180, 200, 0.18), transparent 65%);
+
+  filter: blur(25px);
+  animation: luzFlotante 12s ease-in-out infinite alternate;
+}
+
+/* Aura roja suave en movimiento */
+body::after {
+  content: "";
+  position: fixed;
+  width: 800px;
+  height: 800px;
+  right: -260px;
+  bottom: -280px;
+  z-index: -2;
+  pointer-events: none;
+
+  background:
+    radial-gradient(circle, rgba(255, 0, 70, 0.22), transparent 62%),
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.08), transparent 38%);
+
+  filter: blur(35px);
+  animation: auraMovimiento 10s ease-in-out infinite alternate;
+}
+.titulo-card {
+  animation: aparecerTitulo 1.4s ease forwards;
+}
+
+@keyframes aparecerTitulo {
+  from {
+    opacity: 0;
+    transform: translateY(35px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes fondoVivo {
+  0% {
+    background-position: 0% 40%;
+  }
+
+  100% {
+    background-position: 100% 60%;
+  }
+}
+
+@keyframes luzFlotante {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.65;
+  }
+
+  100% {
+    transform: translate(260px, 170px) scale(1.25);
+    opacity: 0.95;
+  }
+}
+
+@keyframes auraMovimiento {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.65;
+  }
+
+  100% {
+    transform: translate(-220px, -130px) scale(1.18);
+    opacity: 1;
+  }
+}
 
     .pagina {
       max-width: 1100px;
@@ -66,30 +156,100 @@
       filter: blur(3px);
     }
 
-    .titulo-card {
-      position: relative;
-      z-index: 2;
-      width: min(720px, 95%);
-      padding: 55px 35px;
-      border-radius: 35px;
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 30px 70px rgba(0,0,0,0.12);
-      border: 1px solid rgba(255,255,255,0.8);
-    }
+/* Sección principal centrada */
+.hero {
+  min-height: 48vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 20px 20px;
+}
 
-    .titulo-card h1 {
-      font-size: clamp(42px, 7vw, 78px);
-      color: #a00018;
-      margin-bottom: 18px;
-      letter-spacing: 1px;
-    }
+/* Contenedor del título sin caja */
+.titulo-card {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
 
-    .titulo-card p {
-      font-size: 20px;
-      color: #555;
-      line-height: 1.7;
-    }
+  width: 100%;
+  max-width: 900px;
+  padding: 0 !important;
+}
+
+/* Título Nosotros más grande */
+.titulo-card h1 {
+  font-size: clamp(70px, 9vw, 130px);
+  color: #b0001f;
+  margin-bottom: 18px;
+  letter-spacing: 12px;
+
+  text-shadow:
+    0 0 18px rgba(255, 0, 60, 0.35),
+    0 8px 25px rgba(0, 0, 0, 0.45);
+  color: #b8b8b8 !important;
+  text-shadow:
+    0 0 12px rgba(255, 255, 255, 0.18),
+    0 6px 22px rgba(0, 0, 0, 0.65);
+}
+
+/* Frase debajo */
+.titulo-card p {
+  font-size: clamp(18px, 2vw, 26px);
+  color: #f1dfe4;
+  line-height: 1.6;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  color: #ffffff !important;
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 18px;
+
+  background: rgba(120, 120, 120, 0.22);
+  backdrop-filter: blur(3px);
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.28),
+    0 0 35px rgba(180, 180, 180, 0.18);
+
+  text-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.65);
+}
+
+/* Quitar completamente el fondo de la dedicatoria */
+.dedicatoria {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+
+  width: 100%;
+  min-height: 32vh;
+  padding: 0 20px 90px !important;
+  margin: 0 auto 40px !important;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Botones más centrados */
+.botones-web {
+  width: 100%;
+  min-height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 90px;
+}
+
+/* Botones redondos */
+.boton-redondo {
+  width: 145px;
+  height: 145px;
+}
 
     .boton-bajar {
       margin-top: 30px;
@@ -155,42 +315,6 @@
     .slider p {
       font-size: 16px;
       line-height: 1.7;
-    }
-
-    /* BLOQUE DE TEXTO GRANDE */
-    .dedicatoria {
-      
-  display: flex;
-  align-items: center;
-  justify-content: center;
-      width: min(960px, 100%);
-      margin: 40px auto 95px;
-      padding: 70px 60px;
-      min-height: 420px;
-      border-radius: 38px;
-      background:
-        linear-gradient(rgba(255,255,255,0.82), rgba(255,255,255,0.82)),
-        url("https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1400&q=80");
-      background-size: cover;
-      background-position: center;
-      box-shadow: 0 30px 70px rgba(0,0,0,0.14);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.9);
-    }
-
-    .dedicatoria p {
-      max-width: 760px;
-      font-size: clamp(20px, 3vw, 30px);
-      line-height: 1.8;
-      color: #3d3d3d;
-      font-weight: 500;
-    }
-
-    .dedicatoria strong {
-      color: #a00018;
     }
 @keyframes brilloSube {
   0% {
@@ -298,7 +422,7 @@
     }
 
     .recuerdo-texto h2 {
-      color: #a00018;
+      color: ;
       font-size: 34px;
       margin-bottom: 18px;
     }
@@ -317,7 +441,7 @@
 
     .galeria-titulo h2 {
       font-size: clamp(34px, 5vw, 52px);
-      color: #a00018;
+      color: ;
       margin-bottom: 12px;
     }
 
@@ -327,16 +451,15 @@
     }
 .botones-web {
   width: 100%;
-  min-height: 330px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 70px;
+  gap: 480px !important;
 }
 
 .boton-redondo {
-  width: 135px;
-  height: 135px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   display: inline-block;
   transition: 0.35s ease;
@@ -502,9 +625,15 @@
         padding-inline: 15px;
       }
 
-      .dedicatoria {
-        padding: 45px 28px;
-      }
+.dedicatoria {
+  min-height: 34vh !important;
+  padding: 20px 20px 120px !important;
+  margin: 0 auto 40px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
 
       .imagen-ancha {
         height: 250px;
@@ -523,41 +652,306 @@
   position: fixed;
   top: 22px;
   right: 25px;
-  z-index: 999;
+  z-index: 9999;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
+  background: linear-gradient(145deg, #050505, #1a1a1a, #2b2b2b);
+  padding: 8px 12px;
   border-radius: 999px;
-  overflow: hidden;
 
   box-shadow:
     0 15px 35px rgba(0, 0, 0, 0.45),
-    0 0 22px rgba(255, 0, 70, 0.25);
+    0 0 22px rgba(255, 0, 70, 0.3);
 
-  transition: 0.3s ease;
+  overflow: hidden;
 }
 
 .contador-visitas img {
   display: block;
-  height: 38px;
+  height: 30px;
+  border-radius: 999px;
+}
+.contador-personalizado {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.contador-visitas:hover {
-  transform: translateY(-4px) scale(1.05);
+.corazon-contador {
+  color: #ff003c;
+  font-size: 18px;
+  text-shadow:
+    0 0 8px rgba(255, 0, 60, 0.9),
+    0 0 16px rgba(255, 0, 60, 0.5);
+}
+.galeria {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: 0;
+
+  display: grid;
+  grid-template-columns: repeat(5, 285px);
+  justify-content: center;
+  align-items: center;
+  gap: 55px 70px;
+
+  padding: 40px 40px 120px;
+  position: relative;
+}
+
+/* Carta premium */
+.foto {
+  width: 285px;
+  height: 425px;
+  position: relative;
+  overflow: hidden;
+
+  border-radius: 30px;
+  padding: 16px 16px 68px;
+
+  background:
+    linear-gradient(145deg, #050505 0%, #1c1c1c 35%, #4a4a4a 70%, #111 100%);
+
+  box-shadow:
+    0 35px 70px rgba(0, 0, 0, 0.55),
+    0 0 35px rgba(255, 0, 60, 0.12),
+    inset 0 0 18px rgba(255, 255, 255, 0.08);
+
+  cursor: pointer;
+  transition:
+    transform 0.45s ease,
+    box-shadow 0.45s ease,
+    filter 0.45s ease;
+
+  isolation: isolate;
+}
+
+/* Pin rojo iluminado */
+.foto::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+
+  background: radial-gradient(circle, #ff003c 0%, #b00024 55%, #4a000c 100%);
+
+  box-shadow:
+    0 0 12px rgba(255, 0, 60, 0.9),
+    0 0 28px rgba(255, 0, 60, 0.55),
+    0 5px 12px rgba(0, 0, 0, 0.55);
+
+  z-index: 6;
+}
+
+/* Brillo diagonal */
+.foto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 30px;
+
+  background:
+    linear-gradient(
+      120deg,
+      transparent 0%,
+      transparent 35%,
+      rgba(255, 255, 255, 0.22) 48%,
+      transparent 62%,
+      transparent 100%
+    );
+
+  transform: translateX(-130%);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Imagen */
+.foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+
+  display: block;
+  border-radius: 22px;
+
+  box-shadow:
+    inset 0 0 20px rgba(0, 0, 0, 0.45),
+    0 12px 25px rgba(0, 0, 0, 0.35);
+
+  filter: brightness(0.88) contrast(1.08) saturate(1.05);
+  transition: 0.45s ease;
+}
+
+/* Parte inferior tipo polaroid elegante */
+.foto .firma-foto {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  height: 34px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0.8), rgba(90,90,90,0.35), rgba(0,0,0,0.8));
+
+  box-shadow:
+    inset 0 0 12px rgba(255,255,255,0.08),
+    0 0 18px rgba(255,0,60,0.12);
+}
+
+/* Si no quieres tocar HTML, esta línea crea una zona inferior bonita igualmente */
+.foto:not(:has(.firma-foto)) {
+  background:
+    linear-gradient(145deg, #050505 0%, #1c1c1c 35%, #4a4a4a 70%, #111 100%);
+}
+
+/* Hover */
+.foto:hover {
+  transform: translateY(-22px) scale(1.08) rotate(2deg) !important;
+
+  box-shadow:
+    0 50px 95px rgba(0, 0, 0, 0.75),
+    0 0 45px rgba(255, 255, 255, 0.16),
+    0 0 70px rgba(255, 0, 70, 0.38),
+    inset 0 0 22px rgba(255, 255, 255, 0.12);
+
+  z-index: 50;
+}
+
+.foto:nth-child(even):hover {
+  transform: translateY(-22px) scale(1.08) rotate(-2deg) !important;
+}
+
+.foto:hover::after {
+  transform: translateX(130%);
+}
+
+.foto:hover img {
+  filter: brightness(1.08) contrast(1.12) saturate(1.2);
+}
+
+/* Responsive */
+@media (max-width: 1600px) {
+  .galeria {
+    grid-template-columns: repeat(4, 285px);
+  }
+}
+
+@media (max-width: 1250px) {
+  .galeria {
+    grid-template-columns: repeat(3, 285px);
+  }
+}
+
+@media (max-width: 920px) {
+  .galeria {
+    grid-template-columns: repeat(2, 285px);
+  }
+}
+
+@media (max-width: 620px) {
+  .galeria {
+    grid-template-columns: 1fr;
+  }
+
+  .foto {
+    width: 86vw;
+    height: 460px;
+    margin: auto !important;
+  }
+}
+/* Barra inferior mejorada */
+.foto .firma-foto {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 20px;
+  height: 44px;
+
+  border-radius: 999px;
+  overflow: hidden;
+
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02)),
+    linear-gradient(90deg, #080808, #2a2a2a, #101010);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  box-shadow:
+    inset 0 0 15px rgba(255, 255, 255, 0.08),
+    inset 0 -10px 20px rgba(0, 0, 0, 0.45),
+    0 0 18px rgba(255, 0, 60, 0.14),
+    0 8px 20px rgba(0, 0, 0, 0.45);
+
+  backdrop-filter: blur(6px);
+}
+
+/* Brillo rojo central */
+.foto .firma-foto::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(circle at center, rgba(255, 0, 70, 0.32), transparent 45%),
+    linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+
+  opacity: 0.45;
+}
+
+/* Línea fina superior */
+.foto .firma-foto::after {
+  content: "";
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  top: 8px;
+  height: 2px;
+
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
+  opacity: 0.55;
+}
+
+/* Animación al pasar el cursor */
+.foto:hover .firma-foto {
+  box-shadow:
+    inset 0 0 18px rgba(255, 255, 255, 0.12),
+    inset 0 -10px 20px rgba(0, 0, 0, 0.45),
+    0 0 25px rgba(255, 0, 70, 0.35),
+    0 10px 24px rgba(0, 0, 0, 0.55);
+}
+
+.foto:hover .firma-foto::before {
+  opacity: 0.8;
+  animation: brilloBarra 1.1s ease-in-out infinite alternate;
+}
+
+@keyframes brilloBarra {
+  from {
+    transform: translateX(-20%);
+  }
+
+  to {
+    transform: translateX(20%);
+  }
 }
   </style>
 </head>
 
 <body>
-
-  <a class="contador-visitas" href="https://hits.sh/sinnombre-vr.github.io/nosotros/" target="_blank" aria-label="Contador de visitas">
+<div class="contador-visitas">
   <img 
-    src="https://hits.sh/sinnombre-vr.github.io/nosotros.svg?style=for-the-badge&label=%E2%9D%A4&color=111111&labelColor=5a0013"
-    alt="Contador de visitas"
+    src="https://visitor-badge.laobi.icu/badge?page_id=sinnombre-vr.nosotros&left_text=%E2%9D%A4%EF%B8%8F&left_color=111111&right_color=111111"
+    alt="contador de visitas"
   >
-</a>
+</div>
   <aside class="slider" id="slider">
     <div ></div>
     <h2>𝒮𝒶𝒷𝑒𝓈 𝓆𝓊𝑒 𝓉𝑒 𝒶𝓂𝑜 . . .</h2>
@@ -573,10 +967,6 @@
         <h1>𝒩𝑜𝓈𝑜𝓉𝓇𝑜𝓈</h1>
         <p>
           Eres mi sol en los días nublados, mi calma en las tormentas y mi razón para sonreír cada mañana.
-        </p>
-        <button class="boton-bajar" onclick="document.getElementById('dedicatoria').scrollIntoView()">
-          Ver dedicatoria
-        </button>
       </div>
     </section>
 
@@ -617,43 +1007,43 @@
 
     <section class="galeria">
       <div class="foto">
-        <img src="IMG\1º.png" alt="Foto especial 1">
+        <img src="IMG\1º.png" alt="Foto especial 1"><div class="firma-foto"></div>
       </div>
 
       <div class="foto">
-        <img src="IMG\2º.png" alt="Foto especial 2">
+        <img src="IMG\2º.png" alt="Foto especial 2"><div class="firma-foto"></div>
       </div>
 
       <div class="foto">
-        <img src="IMG\3º.png" alt="Foto especial 3">
+        <img src="IMG\3º.png" alt="Foto especial 3"><div class="firma-foto"></div>
       </div>
 
       <div class="foto">
-        <img src="IMG\4º.png" alt="Foto especial 4">
+        <img src="IMG\4º.png" alt="Foto especial 4"><div class="firma-foto"></div>
       </div>
 
       <div class="foto">
-        <img src="IMG\5º.png" alt="Foto especial 5">
+        <img src="IMG\5º.png" alt="Foto especial 5"><div class="firma-foto"></div>
       </div>
 
       <div class="foto">
-        <img src="IMG\6º.png" alt="Foto especial 6">
+        <img src="IMG\6º.png" alt="Foto especial 6"><div class="firma-foto"></div>
       </div>
 
       <div class="foto">
-        <img src="IMG\7º.png" alt="Foto especial 7">
+        <img src="IMG\7º.png" alt="Foto especial 7"><div class="firma-foto"></div>
       </div>
 
       <div class="foto">
-        <img src="IMG\8º.png" alt="Foto especial 8">
+        <img src="IMG\8º.png" alt="Foto especial 8"><div class="firma-foto"></div>
       </div>
 
       <div class="foto">
-        <img src="IMG\9º.png" alt="Foto especial 9">
+        <img src="IMG\9º.png" alt="Foto especial 9"><div class="firma-foto"></div>
       </div>
 
       <div class="foto">
-        <img src="IMG\10º.png" alt="Foto especial 10">
+        <img src="IMG\10º.png" alt="Foto especial 10"><div class="firma-foto"></div>
       </div>
     </section>
 
