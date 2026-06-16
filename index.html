@@ -519,11 +519,67 @@
         height: 330px;
       }
     }
+    .contador-visitas {
+  position: fixed;
+  top: 22px;
+  right: 25px;
+  z-index: 999;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 12px 18px;
+  border-radius: 999px;
+
+  background: linear-gradient(145deg, #050505, #202020, #5a5a5a);
+  color: white;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.45),
+    0 0 22px rgba(255, 0, 70, 0.25);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.contador-visitas span {
+  color: #d0002a;
+  text-shadow:
+    0 0 8px rgba(255, 0, 70, 0.9),
+    0 0 18px rgba(255, 0, 70, 0.5);
+}
+
+.contador-visitas strong {
+  letter-spacing: 1px;
+}
   </style>
 </head>
 
 <body>
+<div class="contador-visitas">
+  <span>❤</span>
+  <strong id="view-count">...</strong>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/counterapi/dist/counter.browser.min.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const counter = new Counter({
+      workspace: "pagina-dedicada-adonais"
+    });
 
+    counter.up("visitas")
+      .then(result => {
+        document.getElementById("view-count").textContent = result.value;
+      })
+      .catch(error => {
+        console.error("Error cargando visitas:", error);
+        document.getElementById("view-count").textContent = "0";
+      });
+  });
+</script>
   <aside class="slider" id="slider">
     <div ></div>
     <h2>𝒮𝒶𝒷𝑒𝓈 𝓆𝓊𝑒 𝓉𝑒 𝒶𝓂𝑜 . . .</h2>
