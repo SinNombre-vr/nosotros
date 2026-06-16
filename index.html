@@ -563,23 +563,6 @@
   <span>❤</span>
   <strong id="view-count">...</strong>
 </div>
-  <script src="https://cdn.jsdelivr.net/npm/counterapi/dist/counter.browser.min.js"></script>
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const counter = new Counter({
-      workspace: "pagina-dedicada-adonais"
-    });
-
-    counter.up("visitas")
-      .then(result => {
-        document.getElementById("view-count").textContent = result.value;
-      })
-      .catch(error => {
-        console.error("Error cargando visitas:", error);
-        document.getElementById("view-count").textContent = "0";
-      });
-  });
-</script>
   <aside class="slider" id="slider">
     <div ></div>
     <h2>𝒮𝒶𝒷𝑒𝓈 𝓆𝓊𝑒 𝓉𝑒 𝒶𝓂𝑜 . . .</h2>
@@ -759,6 +742,39 @@ function crearParticulaBrillo(e, contenedor, aleatorio = false) {
   }, 900);
 }
   </script>
+<script src="https://cdn.jsdelivr.net/npm/counterapi/dist/counter.browser.min.js"></script>
 
+<script>
+  window.addEventListener("load", function () {
+    const numeroVisitas = document.getElementById("view-count");
+
+    if (!numeroVisitas) {
+      console.error("No existe el elemento con id='view-count'");
+      return;
+    }
+
+    if (typeof Counter === "undefined") {
+      console.error("CounterAPI no se ha cargado.");
+      numeroVisitas.textContent = "ERR";
+      return;
+    }
+
+    const counter = new Counter({
+      workspace: "dedicatoria-adonais-2026",
+      debug: true,
+      timeout: 8000
+    });
+
+    counter.up("visitas")
+      .then(function (result) {
+        console.log("Visitas:", result);
+        numeroVisitas.textContent = result.value;
+      })
+      .catch(function (error) {
+        console.error("Error en el contador:", error);
+        numeroVisitas.textContent = "ERR";
+      });
+  });
+</script>
 </body>
 </html>
