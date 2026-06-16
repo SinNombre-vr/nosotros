@@ -519,7 +519,7 @@
         height: 330px;
       }
     }
-    .contador-visitas {
+.contador-visitas {
   position: fixed;
   top: 22px;
   right: 25px;
@@ -527,42 +527,37 @@
 
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
 
-  padding: 12px 18px;
   border-radius: 999px;
-
-  background: linear-gradient(145deg, #050505, #202020, #5a5a5a);
-  color: white;
-
-  font-size: 16px;
-  font-weight: bold;
+  overflow: hidden;
 
   box-shadow:
     0 15px 35px rgba(0, 0, 0, 0.45),
     0 0 22px rgba(255, 0, 70, 0.25);
 
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: 0.3s ease;
 }
 
-.contador-visitas span {
-  color: #d0002a;
-  text-shadow:
-    0 0 8px rgba(255, 0, 70, 0.9),
-    0 0 18px rgba(255, 0, 70, 0.5);
+.contador-visitas img {
+  display: block;
+  height: 38px;
 }
 
-.contador-visitas strong {
-  letter-spacing: 1px;
+.contador-visitas:hover {
+  transform: translateY(-4px) scale(1.05);
 }
   </style>
 </head>
 
 <body>
-<div class="contador-visitas">
-  <span>❤</span>
-  <strong id="view-count">...</strong>
-</div>
+
+  <a class="contador-visitas" href="https://hits.sh/sinnombre-vr.github.io/nosotros/" target="_blank" aria-label="Contador de visitas">
+  <img 
+    src="https://hits.sh/sinnombre-vr.github.io/nosotros.svg?style=for-the-badge&label=%E2%9D%A4&color=111111&labelColor=5a0013"
+    alt="Contador de visitas"
+  >
+</a>
   <aside class="slider" id="slider">
     <div ></div>
     <h2>𝒮𝒶𝒷𝑒𝓈 𝓆𝓊𝑒 𝓉𝑒 𝒶𝓂𝑜 . . .</h2>
@@ -742,41 +737,5 @@ function crearParticulaBrillo(e, contenedor, aleatorio = false) {
   }, 900);
 }
   </script>
-<script>
-  window.addEventListener("load", async function () {
-    const numeroVisitas = document.getElementById("view-count");
-
-    if (!numeroVisitas) return;
-
-    try {
-      const respuesta = await fetch(
-        "https://api.counterapi.dev/v1/pagina-dedicada-adonais/visitas/up",
-        {
-          method: "GET",
-          cache: "no-store"
-        }
-      );
-
-      if (!respuesta.ok) {
-        throw new Error("Error HTTP: " + respuesta.status);
-      }
-
-      const datos = await respuesta.json();
-
-      console.log("Respuesta contador V1:", datos);
-
-      numeroVisitas.textContent =
-        datos.count ??
-        datos.value ??
-        datos.data?.count ??
-        datos.data?.value ??
-        "1";
-
-    } catch (error) {
-      console.error("Error en contador V1:", error);
-      numeroVisitas.textContent = "0";
-    }
-  });
-</script>
 </body>
 </html>
